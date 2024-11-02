@@ -1,7 +1,7 @@
 package com.readman.ReadMan_Server.controller;
 
+import com.readman.ReadMan_Server.model.RegistrationRequestModel;
 import com.readman.ReadMan_Server.model.ResponseModel;
-import com.readman.ReadMan_Server.model.UserModel;
 import com.readman.ReadMan_Server.service.user.registration.RegistrationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +19,8 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<ResponseModel<?>> registrationProcess(
-            @RequestBody UserModel userModel
+            @RequestBody RegistrationRequestModel registrationRequestModel
             ) {
-        return ResponseEntity.ok(registrationService.registerUser(userModel));
+        return ResponseEntity.ok(registrationService.registerUser(registrationRequestModel));
     }
 }

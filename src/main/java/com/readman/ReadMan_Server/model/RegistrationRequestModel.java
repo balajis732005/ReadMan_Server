@@ -5,9 +5,7 @@ import lombok.Data;
 
 @Data
 @Builder
-public class UserModel {
-
-    private String userId;
+public class RegistrationRequestModel {
 
     private String userName;
 

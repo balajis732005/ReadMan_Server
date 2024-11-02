@@ -1,8 +1,8 @@
 package com.readman.ReadMan_Server.service.user.registration;
 
 import com.readman.ReadMan_Server.collection.User;
+import com.readman.ReadMan_Server.model.RegistrationRequestModel;
 import com.readman.ReadMan_Server.model.ResponseModel;
-import com.readman.ReadMan_Server.model.UserModel;
 import com.readman.ReadMan_Server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,28 +14,28 @@ public class RegistrationServiceImpl implements RegistrationService {
     private final UserRepository userRepository;
 
     @Override
-    public ResponseModel<?> registerUser(UserModel user) {
+    public ResponseModel<?> registerUser(RegistrationRequestModel newRegistration) {
 
-        User newUser = User.builder()
-                .userName(user.getUserName())
-                .userEmail(user.getUserEmail())
-                .userPassword(user.getUserPassword())
-                .build();
-
-        if(userRepository.existsByUserEmail(user.getUserEmail())){
+        if(userRepository.existsByUserEmail(newRegistration.getUserEmail())){
             return ResponseModel.builder()
-                    .status(false)
+                    .status(Boolean.FALSE)
                     .message("User Already Exists")
-                    .data(user)
+                    .data(userRepository.findByUserEmail(newRegistration.getUserEmail()))
                     .build();
         }
 
-        userRepository.save(newUser);
+        User newUser = User.builder()
+                .userName(newRegistration.getUserName())
+                .userEmail(newRegistration.getUserEmail())
+                .userPassword(newRegistration.getUserPassword())
+                .build();
+
+        User savedUser = userRepository.save(newUser);
 
         return ResponseModel.builder()
-                .status(true)
+                .status(Boolean.TRUE)
                 .message("Registration Successful")
-                .data(user)
+                .data(savedUser)
                 .build();
     }
 }
