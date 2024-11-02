@@ -32,14 +32,6 @@ public class AuthenticationServiceImpl implements AuthenticationService {
                 )
         );
 
-        if(!auth.isAuthenticated()){
-            return ResponseModel.builder()
-                    .status(Boolean.FALSE)
-                    .message("Authentication Failed")
-                    .data(authenticationRequestModel)
-                    .build();
-        }
-
         User authUser = userRepository.findByUserEmail(authenticationRequestModel.getUserEmail());
 
         var user = (User)auth.getPrincipal();
