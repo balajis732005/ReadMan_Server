@@ -5,12 +5,12 @@ import lombok.Data;
 
 @Data
 @Builder
-public class RegistrationRequestModel {
+public class RegistrationResponseModel {
+
+    private String userId;
 
     private String peopleName;
 
     private String userEmail;
-
-    private String userPassword;
 
 }
