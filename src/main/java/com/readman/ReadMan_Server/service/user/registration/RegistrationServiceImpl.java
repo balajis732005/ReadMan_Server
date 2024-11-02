@@ -7,6 +7,8 @@ import com.readman.ReadMan_Server.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class RegistrationServiceImpl implements RegistrationService {
@@ -16,11 +18,13 @@ public class RegistrationServiceImpl implements RegistrationService {
     @Override
     public ResponseModel<?> registerUser(RegistrationRequestModel newRegistration) {
 
-        if(userRepository.existsByUserEmail(newRegistration.getUserEmail())){
+        Optional<User> existUser = userRepository.findByUserEmail(newRegistration.getUserEmail());
+
+        if(existUser.isPresent()){
             return ResponseModel.builder()
                     .status(Boolean.FALSE)
                     .message("User Already Exists")
-                    .data(userRepository.findByUserEmail(newRegistration.getUserEmail()))
+                    .data(existUser)
                     .build();
         }
 
