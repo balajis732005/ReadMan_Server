@@ -17,7 +17,6 @@ import java.util.List;
 @Data
 @Builder
 @Document(collection = "user")
-@Getter
 public class User implements UserDetails, Principal {
 
     @Id
